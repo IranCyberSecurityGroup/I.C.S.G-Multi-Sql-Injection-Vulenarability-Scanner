@@ -1,0 +1,67 @@
+#!/usr/bin/perl
+use LWP::Simple;
+$usage = "\nperl $0 <listsql.txt>\nExample : perl $0 listsql.txt\n";
+die "$usage" unless $ARGV[0];
+$file="$ARGV[0]";
+###################################################################################################
+#I.C.S.G Multi Sql Injection Vulenarability Scanner                          	 				  #
+#                                                                            	 				  #
+#Coded By WH!T3 W01F                                                         				      #
+#                                                                          				          #
+#Iran Cyber Security Group                                                      			      #	
+#                                                                            			    	  #
+#Iran-Cyber.Org                                                              				      #
+#                                                                          	  				      #
+#Spc Tnx: root3r | MOHAMAD-NOFOZI | KamraN HellisH | JOK3R | Pi.Hack      	  				      #
+#                                                                          	  				      #
+#Put Sites List That You Want To Scan Them In A .txt File Then Give It To Script When Running It  #
+#                                                                               				  #
+#Usage : perl file.pl siteslist.txt		                                       					  #
+###################################################################################################
+print q {
+ _____                          _____      _                   ____
+|_   _|                        / ____|    | |                 / __ \
+  | |  _ __ __ _ _ __  ______ | |    _   _| |__   ___ _ __   | |  | |_ __ __ _
+  | | | '__/ _` | '_ \|______|| |   | | | | '_ \ / _ \ '__|  | |  | | '__/ _` |
+  | |_| | | (_| | | | |       | |___| |_| | |_) |  __/ |  _  | |__| | | | (_| |
+|_____|_|  \__,_|_| |_|        \_____\__, |_.__/ \___|_| (_)  \____/|_|  \__, |
+                                      __/ |                                _/ |
+                                     |___/                               |___/
+
+};
+sleep(2);
+print "\n";
+print "\t+=============================================================+\n";
+print "\t|     I.C.S.G Multi Sql Injection Vulenarability Scanner      |\n";
+print "\t|                     Author: WH!T3 W01F                      |\n";
+print "\t|                       Iran-Cyber.Org                        |\n";
+print "\t| Spc Tnx: root3r|MOHAMAD-NOFOZI|KamraN HellisH|JOK3R|Pi.Hack |\n";
+print "\t+=============================================================+\n";
+print "\n\n";
+print "\tScanning ... (Vulnerable Sites Will Save In vulns.txt)\n\n";
+open("list","<$file") or die "Can't Open Sites List : $!";
+while(<list>){
+chomp($_);
+$site=$_;
+if ($site =~ /http:|https:/) {
+$get=get "$site";
+if ($get =~ /Warning: mysql_fetch_array()|Warning: mysql_query(): |Warning: mysql_query(): Access denied for user|You have an error in your SQL syntax;|Warning: mysql_fetch_array|supplied argument is not a valid MySQL result resource in|There was an error querying the database.|Warning: mysql_fetch_row():|Division by zero in|Call to a member function|Microsoft JET Database|Microsoft OLE DB Provider for SQL Server|Unclosed quotation mark|Microsoft OLE DB Provider for Oracle|Incorrect syntax near|SQL query failed|mysql_fetch_object()|argument is not a valid MySQL|Syntax error|Fatal error|mysql_num_rows()|execute query|mysql_num_rows()|mysql_error|error/) {
+print "$site => Is Vulnerable\n";
+open("vulns",">>vulns.txt") or die "Can't Write To File : $!";
+print vulns "$site\n";
+}
+} else {
+$site2='http://' . $site;
+$get2=get "$site2";
+if ($get2 =~ /Warning: mysql_fetch_array()|Warning: mysql_query(): |Warning: mysql_query(): Access denied for user|You have an error in your SQL syntax;|Warning: mysql_fetch_array|supplied argument is not a valid MySQL result resource in|There was an error querying the database.|Warning: mysql_fetch_row():|Division by zero in|Call to a member function|Microsoft JET Database|Microsoft OLE DB Provider for SQL Server|Unclosed quotation mark|Microsoft OLE DB Provider for Oracle|Incorrect syntax near|SQL query failed|mysql_fetch_object()|argument is not a valid MySQL|Syntax error|Fatal error|mysql_num_rows()|execute query|mysql_num_rows()|mysql_error|error/) {
+print "$site2 => Is Vulnerable\n";
+open("vulns",">>vulns.txt") or die "Can't Write To File : $!";
+print vulns "$site\n";
+}
+}
+}
+print "################################################\n\n";
+print "Finished.Vulnerable Links Saved In vulns.txt ;)\n\n";
+print "Don't Forget To Visit Iran-Cyber.Org ;)\n\n";
+close("vulns");
+close("list");
